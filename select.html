@@ -19,14 +19,17 @@
 
 
   <body>
-
     <div class="container">
-        <select id="course-choice" name="courses">
-        </select>
+    <form action="course-selection.php" method="post">
+      <select id="course-choice" name="courses" >
+          <option selected="selected">Choose A Course </option>
+      </select>
+      <select id="dates" name="dates">
+          <option selected="selected">Choose an Observation Date</option>
+      </select>
+      <input type="submit">
+    </form>
     </div>
-
-
-
 
 
 
