@@ -94,8 +94,9 @@ if (strlen($selected_course) > 0) {
     }
 
 
-    print_r($oDate);
-    print_r($datetimes);
+    // print_r($oDate);
+    // print_r($datetimes);
+    echo '<br>';
 
 }
 ?>
