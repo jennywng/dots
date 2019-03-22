@@ -2,7 +2,8 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "";
+//my passowrd set is pwdpwd
+$password = "pwdpwd";
 $dbname = "dots2";
 
 // create connection to database
@@ -10,17 +11,14 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn -> connect_error) {
 	die("Unable to connect to DB: " . $conn -> connect_error);
 }
-
 echo 'connected successfully to dots2 <br>';
-
-
 
 
 $courseODates = "SELECT SC.dN, SC.sID, RCA.oDY FROM system_courses SC 
 INNER JOIN roca_collection_assignments RCA ON SC.id = RCA.cID
 INNER JOIN roca_collections RC ON RC.aID = RCA.id";
 
-// query() function runs the SQL query and puts data into variable result
+// query() function of $conn objects runs the SQL query and puts data into variable result
 $result = $conn->query($courseODates);
 
 echo '<br>';
@@ -36,6 +34,7 @@ if ($result -> num_rows > 0) {
 	
 	// $cIDArr = array();
 	// $codeArr = array();
+	// fecth the first element from the collection
 	$row1 = $result->fetch_assoc();
 	print_r($row1);
 	echo '<br>';
@@ -48,8 +47,21 @@ if ($result -> num_rows > 0) {
 		$course_name[] = $dN; 
 		$semester[] = $sID;
 		$oDate[] = new Datetime("@$oDY");
+		$export[] = array('course_name'=>$dN, 'semester'=>$sID, 'oDate'=>new Datetime("@$oDY"));
 	}
 	echo '</table><br>';
+
+	// write extracted data to .json file
+	$fp = fopen('results.json', 'w');
+	// fwrite($fp, json_encode($course_name));
+	// fwrite($fp, json_encode($semester));
+	// fwrite($fp, json_encode($oDate));
+	$encode_export = array('data'=>$export);
+	fwrite($fp, json_encode($encode_export));
+	fclose($fp);
+
+
+
 
 	// print_r($sc_id) . '<br>';
 	// print_r($sc_cid) . '<br>';
