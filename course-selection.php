@@ -31,7 +31,7 @@ if ($result -> num_rows > 0) {
 	$courses = array_unique($course_name);
 	echo '<br>';
     
-    print_r($courses);
+    // print_r($courses);
 	echo '<br>';
 
 } else {
