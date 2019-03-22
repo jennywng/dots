@@ -2,6 +2,11 @@
 
 // get all courses + all the observation dates per course
 // exclude courses that don't have observations
+
+$courses = "SELECT SC.dN, SC.sID FROM system_courses SC 
+INNER JOIN roca_collection_assignments RCA ON SC.id = RCA.cID
+INNER JOIN roca_collections RC ON RC.aID = RCA.id";
+
 $courseODates = "SELECT SC.dN, SC.sID, RCA.oDY FROM system_courses SC 
 INNER JOIN roca_collection_assignments RCA ON SC.id = RCA.cID
 INNER JOIN roca_collections RC ON RC.aID = RCA.id";

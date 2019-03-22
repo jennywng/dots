@@ -3,7 +3,8 @@
 $servername = "localhost";
 $username = "root";
 //my passowrd set is pwdpwd
-$password = "pwdpwd";
+$password = "";
+// $password = "pwdpwd";
 $dbname = "dots2";
 
 // create connection to database
@@ -30,7 +31,7 @@ echo '<br>';
 
 // num_rows() checks that theres more than 1 row
 if ($result -> num_rows > 0) {
-	echo "<table><tr><th>SC Name</th><th>sID</th><th>RC oDate</th></tr>";
+	// echo "<table><tr><th>SC Name</th><th>sID</th><th>RC oDate</th></tr>";
 	
 	// $cIDArr = array();
 	// $codeArr = array();
@@ -41,7 +42,7 @@ if ($result -> num_rows > 0) {
 
 
 	while($row = $result->fetch_assoc()) {
-		echo '<tr><td>' . $row['dN'] . '</td><td>' . $row['sID'] . '</td><td>' . $row['oDY'] . '</td></tr>';
+		// echo '<tr><td>' . $row['dN'] . '</td><td>' . $row['sID'] . '</td><td>' . $row['oDY'] . '</td></tr>';
 
 		extract($row);
 		$course_name[] = $dN; 
@@ -49,16 +50,17 @@ if ($result -> num_rows > 0) {
 		$oDate[] = new Datetime("@$oDY");
 		$export[] = array('course_name'=>$dN, 'semester'=>$sID, 'oDate'=>new Datetime("@$oDY"));
 	}
-	echo '</table><br>';
+	// echo '</table><br>';
 
 	// write extracted data to .json file
-	$fp = fopen('results.json', 'w');
+	// $fp = fopen('results.json', 'w');
 	// fwrite($fp, json_encode($course_name));
 	// fwrite($fp, json_encode($semester));
 	// fwrite($fp, json_encode($oDate));
 	$encode_export = array('data'=>$export);
-	fwrite($fp, json_encode($encode_export));
-	fclose($fp);
+	echo json_encode($encode_export);
+	// fwrite($fp, json_encode($encode_export));
+	// fclose($fp);
 
 
 
