@@ -62,7 +62,9 @@ $selected_course = '';
 
 if (isset($_POST['submit'])) {
     $selected_course = $_POST['course-choice'];
+    
     echo $selected_course;
+    echo '<br>';
 }
 
 
@@ -83,7 +85,7 @@ if (strlen($selected_course) > 0) {
 	    }
     
 	    foreach($oDate as $key=>$d) {
-            $datetimes[] = $d->format('d-m-Y');
+            $datetimes[] = $d->format('m-d-Y H:i:s');
         }
         
 
