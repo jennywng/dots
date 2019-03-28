@@ -62,14 +62,15 @@ $selected_course = '';
 
 if (isset($_POST['submit'])) {
     $selected_course = $_POST['course-choice'];
-    
+    setcookie('course', $selected_course, time()+3600);
     echo $selected_course;
+    echo $_COOKIE['course'];
     echo '<br>';
 }
 
 
 
-if (strlen($selected_course) > 0) {
+if (isset($_COOKIE['course'])) {
     // get course dates
     $courseODates = "SELECT RCA.rDY FROM system_courses SC 
     INNER JOIN roca_collection_assignments RCA ON SC.id = RCA.cID
@@ -93,11 +94,7 @@ if (strlen($selected_course) > 0) {
 	    echo 'No results';
     }
 
-
-    // print_r($oDate);
-    // print_r($datetimes);
     echo '<br>';
-
 }
 ?>
 
@@ -115,6 +112,24 @@ if (strlen($selected_course) > 0) {
 </form>
 
 <?php
+
+
+if (isset($_POST['submit'])) {
+    $selected_date = $_POST['date-choice'];
+    setcookie('date', $selected_date, time()+3600);
+    echo $_COOKIE['date'];
+    echo $_COOKIE['course'];
+    echo '<br>';
+}
+
+
+if (isset($_COOKIE['course']) && isset($_COOKIE['date'])) {
+    $selected_date = $_POST['date-choice'];
+    
+    echo $_selected_course;
+    echo $selected_date;
+    echo '<br>';
+}
 
 ?>
 
