@@ -37,5 +37,6 @@ if ($result -> num_rows > 0) {
 	echo 'No results';
 }
 
+$conn->close();
 
 ?>
