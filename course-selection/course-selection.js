@@ -25,11 +25,18 @@ function getCourses() {
 
 function getDates() {
     var course = document.getElementById('course-choice');
-    var c = course.options[course.selectedIndex].value
+    var c = course.options[course.selectedIndex].value;
+    
+    var select = document.getElementById("date-choice");
+    
+    console.log($('.date-option'));
+    $('.date-option').each(function() {
+        $(this).remove();
+    });
+
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var select = document.getElementById("date-choice");
             
             var dates_json = this.responseText;
             console.log(dates_json);
@@ -37,9 +44,11 @@ function getDates() {
             console.log(dates);
 
             for (d in dates) {
-                console.log(d);
-                var option = document.createElement('option', value=dates[d]);
+                var option = document.createElement('option');
+                option.setAttribute('value', dates[d]);
+                option.setAttribute('class', 'date-option');
                 option.append(dates[d]);
+                console.log(option.className);
                 select.append(option);
             }
         }
@@ -47,3 +56,4 @@ function getDates() {
     xmlhttp.open("GET", "get-dates.php?c=" + c, true);
     xmlhttp.send();
 }
+
