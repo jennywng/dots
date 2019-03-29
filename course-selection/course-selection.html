@@ -55,7 +55,7 @@
 
             var dates = document.getElementById('date-choice');
             var date = dates.options[dates.selectedIndex].value;
-            console.log(date);
+            console.log("unix date: " + date);
             
             
             $.ajax({
@@ -63,7 +63,7 @@
                 type: 'POST',
                 data: {
                     'course': c,
-                    'date': d,
+                    'date': date,
                 },
                 success: function(data) {
                     console.log(data);

@@ -18,19 +18,24 @@ if (isset($_POST['course']) && isset($_POST['course'])) {
 }
 
 
-
 $activities = "SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT, RCD.eT
 FROM roca_code_bank CB
 INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id
 INNER JOIN roca_collections RC ON RCD.cID = RC.id
 INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID
 INNER JOIN system_courses SC ON SC.id = RCA.cID
-WHERE SC.ID = $course AND RCD.eT != 0 AND RCA.oDY = $date";
+WHERE SC.ID = $course AND RCA.oDY = $date";
 
+// $activities = "SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT, RCD.eT 
+// FROM roca_code_bank CB 
+// INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id 
+// INNER JOIN roca_collections RC ON RCD.cID = RC.id 
+// INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID 
+// INNER JOIN system_courses SC ON SC.id = RCA.cID 
+// WHERE SC.ID = 2 AND RCA.oDY = 1497931200";
 
 
 $result = $conn->query($activities);
-
 
 if ($result -> num_rows > 0) {
 
@@ -47,7 +52,7 @@ if ($result -> num_rows > 0) {
         $e = new Datetime("@$eT");
         $e->format('m-d-Y H:i:s');
 
-        $export[] = array('name'=>$dN, 'description'=>$dD, 'start'=>$s, 'end'=>$e);
+        $export[] = array('name'=>$dN, 'description'=>$dD, 'displayCode'=>$dC, 'startTime'=>$s, 'endTime'=>$e, 'unixStart'=>$sT, 'unixEnd'=>$eT);
     }
 
     // foreach($start as $key=>$s) {

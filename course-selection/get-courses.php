@@ -12,9 +12,7 @@ if ($conn -> connect_error) {
 	die("Unable to connect to DB: " . $conn -> connect_error);
 }
 
-// $coursesSQL = "SELECT SC.dN, SC.ID FROM system_courses SC 
-// INNER JOIN roca_collection_assignments RCA ON SC.id = RCA.cID
-// INNER JOIN roca_collections RC ON RC.aID = RCA.id";
+
 
 $coursesSQL = "SELECT SC.dN, SC.ID FROM system_courses SC";
 
