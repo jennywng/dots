@@ -12,15 +12,18 @@ if ($conn -> connect_error) {
 	die("Unable to connect to DB: " . $conn -> connect_error);
 }
 
-// if (isset($_POST['course'])) {
-//     $selected_course = $_POST['course'];
-// }
 
-$selected_course = $_REQUEST['c'];
+if (isset($_POST['course'])) {
+    $courseID = $_POST['course'];
+}
 
 $courseODates = "SELECT RCA.oDY FROM system_courses SC 
-INNER JOIN roca_collection_assignments RCA ON SC.id = RCA.cID
-INNER JOIN roca_collections RC ON RC.aID = RCA.id WHERE SC.dN = '" . $selected_course . "'";
+INNER JOIN roca_collection_assignments RCA ON SC.ID = RCA.cID
+INNER JOIN roca_collections RC ON RC.aID = RCA.id WHERE SC.ID = $courseID";
+
+// $courseODates = "SELECT RCA.oDY FROM system_courses SC 
+// INNER JOIN roca_collection_assignments RCA ON SC.ID = RCA.cID
+// INNER JOIN roca_collections RC ON RC.aID = RCA.id WHERE SC.ID = 2";
 
 $result = $conn->query($courseODates);
 
@@ -28,15 +31,13 @@ if ($result -> num_rows > 0) {
 
     while($row = $result->fetch_assoc()) {
         extract($row);
-        $oDate[] = new Datetime("@$oDY");
-    }
 
-    foreach($oDate as $key=>$d) {
-        $datetimes[] = $d->format('m-d-Y H:i:s');
+        $oDate = new Datetime("@$oDY");
+        $oDate->format('m-d-Y H:i:s');
+        $export[] = array("unixTime"=>$oDY, "oDate"=>$oDate);
     }
-
-    echo json_encode($datetimes);
     
+    echo json_encode($export);
 
 } else {
     echo 'No results';

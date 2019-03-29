@@ -25,7 +25,7 @@ INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id
 INNER JOIN roca_collections RC ON RCD.cID = RC.id
 INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID
 INNER JOIN system_courses SC ON SC.id = RCA.cID
-WHERE SC.dN = '$course' AND RCD.eT != 0 AND RCA.oDY = '$date'";
+WHERE SC.ID = $course AND RCD.eT != 0 AND RCA.oDY = $date";
 
 
 
