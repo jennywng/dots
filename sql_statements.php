@@ -23,7 +23,7 @@ INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id)
 INNER JOIN roca_collections RC ON RCD.cID = RC.id)
 INNER JOIN roca_collections_assignments RCA ON RCA.id = RC.aID)
 INNER JOIN systems_courses SC ON SC.id = RCA.cID)
-WHERE RCA.oDY = 1493611200 AND SC.dName = 'MAE 6250' AND RCD.eT != 0"
+WHERE RCA.oDY = 1493611200 AND SC.dName = 'MAE 6250' AND RCD.eT != 0";
 
 // select for all activities for 1 course and 1 observation date
 $events = "SELECT CB.ID, CB.cID, CB.code, CB.dName, CB.dDescription, RD.sT
@@ -32,7 +32,7 @@ INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id)
 INNER JOIN roca_collections RC ON RCD.cID = RC.id)
 INNER JOIN roca_collection RC ON RD.cID = RC.id)
 INNER JOIN systems_courses SC ON SC.id = RC.cID)
-WHERE RC.oDate = 1498795200 AND SC.cID = '6250-F16' AND RD.eTime == 0"
+WHERE RC.oDate = 1498795200 AND SC.cID = '6250-F16' AND RD.eTime == 0";
 
 //select for all intervals for 1 course and 1 observation date
 $intervals = "SELECT CB.ID, CB.cID, CB.code, CB.dName, CB.dDescription, RI.sTime, RI.oID
@@ -41,9 +41,24 @@ INNER JOIN roca_intervals RI ON RI.dID = CB.id)
 INNER JOIN roca_data RD ON RD.dID = CB.id)
 INNER JOIN roca_collection RC ON RD.cID = RC.id)
 INNER JOIN systems_courses SC ON SC.id = RC.cID)
-WHERE RC.oDate = 1498795200 AND SC.cID = '6250-F16'"
+WHERE RC.oDate = 1498795200 AND SC.cID = '6250-F16'";
 
 
+$activities = "SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT, RCD.eT
+FROM roca_code_bank CB
+INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id
+INNER JOIN roca_collections RC ON RCD.cID = RC.id
+INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID
+INNER JOIN system_courses SC ON SC.id = RCA.cID
+WHERE SC.ID = $course AND RCA.oDY = $date AND RCD.eT != 0";
+
+$events = "SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT
+FROM roca_code_bank CB 
+INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id
+INNER JOIN roca_collections RC ON RCD.cID = RC.id
+INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID
+INNER JOIN systems_courses SC ON SC.id = RCA.cID
+WHERE RC.oDY = $date AND SC.ID = $course AND RCD.eTime == 0";
 
 /*
 3 JSON files (1 per timeline)

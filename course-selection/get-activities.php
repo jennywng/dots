@@ -17,26 +17,17 @@ if (isset($_POST['course']) && isset($_POST['course'])) {
     $date = $_POST['date'];
 }
 
-// MAE 6250 (id=2) and 1497931200 have events and activities results
 
-$events = "SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT
-FROM roca_code_bank CB 
+$activities = "SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT, RCD.eT
+FROM roca_code_bank CB
 INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id
 INNER JOIN roca_collections RC ON RCD.cID = RC.id
 INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID
 INNER JOIN system_courses SC ON SC.id = RCA.cID
-WHERE RCA.oDY = $date AND SC.ID = $course AND RCD.eT = 0";
-
-// SELECT CB.ID, CB.cID, CB.dC, CB.dN, CB.dD, RCD.sT 
-// FROM roca_code_bank CB 
-// INNER JOIN roca_collection_data RCD ON RCD.bID = CB.id 
-// INNER JOIN roca_collections RC ON RCD.cID = RC.id 
-// INNER JOIN roca_collection_assignments RCA ON RCA.id = RC.aID 
-// INNER JOIN system_courses SC ON SC.id = RCA.cID 
-// WHERE RCA.oDY = 1497931200 AND SC.ID = 2 AND RCD.eT = 0
+WHERE SC.ID = $course AND RCA.oDY = $date AND RCD.eT != 0";
 
 
-$result = $conn->query($events);
+$result = $conn->query($activities);
 
 if ($result -> num_rows > 0) {
 
@@ -44,11 +35,13 @@ if ($result -> num_rows > 0) {
         extract($row);
         $s = new Datetime("@$sT");
         $s->format('m-d-Y H:i:s');
+        $e = new Datetime("@$eT");
+        $e->format('m-d-Y H:i:s');
 
-        $encode[] = array('name'=>$dN, 'description'=>$dD, 'displayCode'=>$dC, 'startTime'=>$s, 'unixStart'=>$sT);
+        $export[] = array('name'=>$dN, 'description'=>$dD, 'displayCode'=>$dC, 'startTime'=>$s, 'endTime'=>$e, 'unixStart'=>$sT, 'unixEnd'=>$eT);
     }
 
-    $encode_export = array('events_data'=>$encode);
+    $encode_export = array('activities_data'=>$export);
 	echo json_encode($encode_export);
 
     
