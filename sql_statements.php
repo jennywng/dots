@@ -76,7 +76,7 @@ INNER JOIN roca_data RD ON RD.dID = CB.id)
 INNER JOIN roca_collection RC ON RD.cID = RC.id)
 INNER JOIN systems_courses SC ON SC.id = RC.cID)
 WHERE SC.cName='SYS 6001' && RC.rDate='Feb 16'
-"
+";
 
 // get lecturing events in SYS 6001
 $s2 = "SELECT CB.dName, CB.dDescription, RD.sTime, RD.eTime
@@ -85,7 +85,7 @@ INNER JOIN roca_data RD ON RD.dID = CB.id)
 INNER JOIN roca_collection RC ON RD.cID = RC.id)
 INNER JOIN systems_courses SC ON SC.id = RC.cID)
 WHERE SC.cName='SYS 6001' AND CB.id=1
-"
+";
 
 // get interval data
 $s3 = "SELECT CB.dName, CB.dDescription, roca_intervals.sTime, roca_intervals.dID
@@ -95,7 +95,7 @@ INNER JOIN roca_data RD ON RD.dID = CB.id)
 INNER JOIN roca_collection RC ON RD.cID = RC.id)
 INNER JOIN systems_courses SC ON SC.id = RC.cID)
 WHERE SC.cName='SYS 6001' && CB.id=1
-"
+";
 
 // $sql = "SELECT ID, cID, code FROM code_bank WHERE cID=7";
 ?>
